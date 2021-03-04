@@ -299,3 +299,8 @@ fabric.properties
 # .pnp.*
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,vim,webstorm,node,yarn,react
+
+## Custom
+
+# Webstorm
+.idea
