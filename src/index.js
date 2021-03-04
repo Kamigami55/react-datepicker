@@ -1,11 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Normalize } from 'styled-normalize'
 
-class HelloMessage extends React.Component {
-  render() {
-    return <div>Hello {this.props.name}</div>
-  }
-}
+import App from './App'
 
-const mountNode = document.getElementById('app')
-ReactDOM.render(<HelloMessage name="Jane" />, mountNode)
+ReactDOM.render(
+  <React.StrictMode>
+    <Normalize />
+    <App />
+  </React.StrictMode>,
+  document.getElementById('app')
+)
