@@ -2,6 +2,13 @@ import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
+// 今天年月日
+export const THIS_YEAR = +new Date().getFullYear()
+export const THIS_MONTH = +new Date().getMonth() + 1
+export const THIS_DAY = +new Date().getDay()
+
+const COLOR_RED = '#db3d44'
+
 const CALENDAR_MONTHS = [
   'Jan',
   'Feb',
@@ -84,7 +91,11 @@ function DecadeView(props) {
         {[...new Array(10)].map((_, index) => {
           const year = viewDecade + index
           return (
-            <button key={year} onClick={() => selectYear(year)}>
+            <button
+              key={year}
+              onClick={() => selectYear(year)}
+              style={{ color: year === THIS_YEAR ? COLOR_RED : 'black' }}
+            >
               {year}
             </button>
           )
@@ -125,8 +136,13 @@ function YearView(props) {
       <YearViewContent>
         {CALENDAR_MONTHS.map((monthText, index) => {
           const monthNum = index + 1
+          const isThisMonth = viewYear === THIS_YEAR && monthNum === THIS_MONTH
           return (
-            <button key={monthNum} onClick={() => selectMonth(monthNum)}>
+            <button
+              key={monthNum}
+              onClick={() => selectMonth(monthNum)}
+              style={{ color: isThisMonth ? COLOR_RED : 'black' }}
+            >
               {monthText}
             </button>
           )
@@ -208,8 +224,16 @@ function MonthView(props) {
         {/* days of current month */}
         {[...new Array(monthDays)].map((_, index) => {
           const day = index + 1
+          const isToday =
+            viewYear === THIS_YEAR &&
+            viewMonth === THIS_MONTH &&
+            day === THIS_DAY
           return (
-            <button key={day} onClick={() => selectDay(day)}>
+            <button
+              key={day}
+              onClick={() => selectDay(day)}
+              style={{ color: isToday ? COLOR_RED : 'black' }}
+            >
               {day}
             </button>
           )
