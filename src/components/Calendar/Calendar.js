@@ -65,6 +65,7 @@ const YearViewContent = styled.div`
 
 function DecadeView(props) {
   const { viewDate, setViewDate, selectedDate } = props
+  const { year: selectedYear } = selectedDate
   const { decade: viewDecade, year: viewYear, month: viewMonth } = viewDate
 
   const goPrevDecade = () => {
@@ -90,11 +91,16 @@ function DecadeView(props) {
         <button disabled>{viewDecade - 1}</button>
         {[...new Array(10)].map((_, index) => {
           const year = viewDecade + index
+          const isTodayYear = year === THIS_YEAR
+          const isSelected = year === selectedYear
           return (
             <button
               key={year}
               onClick={() => selectYear(year)}
-              style={{ color: year === THIS_YEAR ? COLOR_RED : 'black' }}
+              style={{
+                color: isSelected ? 'white' : isTodayYear ? COLOR_RED : 'black',
+                backgroundColor: isSelected ? COLOR_RED : 'white',
+              }}
             >
               {year}
             </button>
@@ -108,6 +114,7 @@ function DecadeView(props) {
 
 function YearView(props) {
   const { viewDate, setViewDate, selectedDate } = props
+  const { year: selectedYear, month: selectedMonth } = selectedDate
   const { decade: viewDecade, year: viewYear, month: viewMonth } = viewDate
 
   const goPrevYear = () => {
@@ -137,11 +144,16 @@ function YearView(props) {
         {CALENDAR_MONTHS.map((monthText, index) => {
           const monthNum = index + 1
           const isThisMonth = viewYear === THIS_YEAR && monthNum === THIS_MONTH
+          const isSelected =
+            viewYear === selectedYear && monthNum === selectedMonth
           return (
             <button
               key={monthNum}
               onClick={() => selectMonth(monthNum)}
-              style={{ color: isThisMonth ? COLOR_RED : 'black' }}
+              style={{
+                color: isSelected ? 'white' : isThisMonth ? COLOR_RED : 'black',
+                backgroundColor: isSelected ? COLOR_RED : 'white',
+              }}
             >
               {monthText}
             </button>
@@ -159,6 +171,11 @@ const MonthViewContent = styled.div`
 
 function MonthView(props) {
   const { viewDate, setViewDate, selectedDate, onSelect } = props
+  const {
+    year: selectedYear,
+    month: selectedMonth,
+    day: selectedDay,
+  } = selectedDate
   const { decade: viewDecade, year: viewYear, month: viewMonth } = viewDate
 
   const goPrevMonth = () => {
@@ -228,11 +245,18 @@ function MonthView(props) {
             viewYear === THIS_YEAR &&
             viewMonth === THIS_MONTH &&
             day === THIS_DAY
+          const isSelected =
+            viewYear === selectedYear &&
+            viewMonth === selectedMonth &&
+            day === selectedDay
           return (
             <button
               key={day}
               onClick={() => selectDay(day)}
-              style={{ color: isToday ? COLOR_RED : 'black' }}
+              style={{
+                color: isSelected ? 'white' : isToday ? COLOR_RED : 'black',
+                backgroundColor: isSelected ? COLOR_RED : 'white',
+              }}
             >
               {day}
             </button>
