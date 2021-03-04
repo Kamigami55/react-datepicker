@@ -1,0 +1,8 @@
+{
+  "name": "react-datepicker",
+  "version": "1.0.0",
+  "description": "My custom react datepicker component",
+  "main": "index.js",
+  "author": "Eason Chang",
+  "license": "MIT"
+}
