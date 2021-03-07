@@ -2,12 +2,12 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import CalendarHeader from '../../molecules/CalendarHeader'
+import { CalendarContent } from '../Calendar/styles'
 import {
-  CalendarContent,
   DateButtonNormal,
   DateButtonSelected,
   DateButtonToday,
-} from '../Calendar/styles'
+} from '../../atoms/DateButton'
 import {
   CALENDAR_MONTHS,
   THIS_MONTH,

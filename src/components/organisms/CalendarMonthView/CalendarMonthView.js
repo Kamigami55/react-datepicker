@@ -8,19 +8,19 @@ import {
   monthText,
 } from '../../../utils/dateUtils'
 import CalendarHeader from '../../molecules/CalendarHeader'
-import {
-  CalendarContent,
-  DateButtonDisabled,
-  DateButtonNormal,
-  DateButtonSelected,
-  DateButtonToday,
-} from '../Calendar/styles'
+import { CalendarContent } from '../Calendar/styles'
 import WeekDayHeader from '../../molecules/WeekDayHeader'
 import {
   THIS_DATE,
   THIS_MONTH,
   THIS_YEAR,
 } from '../../../constants/dateConstants'
+import {
+  DateButtonDisabled,
+  DateButtonNormal,
+  DateButtonSelected,
+  DateButtonToday,
+} from '../../atoms/DateButton'
 
 function CalendarMonthView(props) {
   const { viewDate, setViewDate, selectedDate, onSelect } = props

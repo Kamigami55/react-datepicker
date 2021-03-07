@@ -2,13 +2,13 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import CalendarHeader from '../../molecules/CalendarHeader'
+import { CalendarContent } from '../Calendar/styles'
 import {
-  CalendarContent,
   DateButtonDisabled,
   DateButtonNormal,
   DateButtonSelected,
   DateButtonToday,
-} from '../Calendar/styles'
+} from '../../atoms/DateButton'
 import { THIS_YEAR } from '../../../constants/dateConstants'
 
 function CalendarDecadeView(props) {

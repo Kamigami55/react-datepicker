@@ -7,7 +7,7 @@ import CalendarMonthView from '../CalendarMonthView'
 import CalendarYearView from '../CalendarYearView'
 
 function Calendar(props) {
-  const { date: selectedDate, onSelect } = props
+  const { date: selectedDate, onSelect, ...other } = props
   const [viewDate, setViewDate] = useState({
     decade: 2020,
     year: 2021,
@@ -42,7 +42,7 @@ function Calendar(props) {
     )
   }
 
-  return <StyledCalendar>{renderView()}</StyledCalendar>
+  return <StyledCalendar {...other}>{renderView()}</StyledCalendar>
 }
 
 Calendar.propTypes = {
