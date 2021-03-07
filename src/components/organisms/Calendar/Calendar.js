@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 
 import {
   CALENDAR_MONTHS,
-  WEEK_DAYS,
   THIS_YEAR,
   THIS_MONTH,
   THIS_DATE,
@@ -20,10 +19,10 @@ import {
   DateButtonSelected,
   DateButtonToday,
   StyledCalendar,
-  WeekDayText,
   CalendarContent,
 } from './styles'
 import CalendarHeader from '../../molecules/CalendarHeader'
+import WeekDayHeader from '../../molecules/WeekDayHeader'
 
 // ==================== Styled components ====================
 
@@ -184,9 +183,7 @@ function MonthView(props) {
       </CalendarHeader>
 
       <CalendarContent gridCols={7}>
-        {WEEK_DAYS.map((dayText) => (
-          <WeekDayText key={dayText}>{dayText}</WeekDayText>
-        ))}
+        <WeekDayHeader />
 
         {/* days of prev month */}
         {[...new Array(daysFromPrevMonth)].map((_, index) => {

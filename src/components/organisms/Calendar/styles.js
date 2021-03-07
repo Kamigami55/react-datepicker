@@ -27,11 +27,6 @@ CalendarContent.defaultProps = {
   gridCols: 4,
 }
 
-export const WeekDayText = styled.strong`
-  text-align: center;
-  padding: 8px;
-`
-
 const RoundButtonOuter = styled(ButtonBase)`
   position: relative;
   height: 0;
