@@ -1,67 +1,40 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import styled from 'styled-components'
 
-// 今天年月日
-export const THIS_YEAR = +new Date().getFullYear()
-export const THIS_MONTH = +new Date().getMonth() + 1
-export const THIS_DAY = +new Date().getDay()
+import {
+  CALENDAR_MONTHS,
+  WEEK_DAYS,
+  THIS_YEAR,
+  THIS_MONTH,
+  THIS_DATE,
+} from '../../../constants/dateConstants'
+import {
+  getMonthDays,
+  getMonthFirstDay,
+  getNextMonth,
+  getPreviousMonth,
+  monthText,
+} from '../../../utils/dateUtils'
+import {
+  ArrowLeftButton,
+  ArrowRightButton,
+  CalendarHeader,
+  DateButtonDisabled,
+  DateButtonNormal,
+  DateButtonSelected,
+  DateButtonToday,
+  HeaderDateButton,
+  MonthViewContent,
+  StyledCalendar,
+  WeekDayText,
+  YearViewContent,
+} from './styles'
+
+// ==================== Constants ====================
 
 const COLOR_RED = '#db3d44'
 
-const CALENDAR_MONTHS = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sep',
-  'Oct',
-  'Nov',
-  'Dec',
-]
-
-const WEEK_DAYS = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa']
-
-const zeroPad = (value, length) => `${value}`.padStart(length, '0')
-
-const getMonthDays = (month, year) => {
-  const months30 = [4, 6, 9, 11]
-  const leapYear = year % 4 === 0 // TODO 更詳細閏年判定
-
-  return month === 2 ? (leapYear ? 29 : 28) : months30.includes(month) ? 30 : 31
-}
-
-const getMonthFirstDay = (month, year) => {
-  return +new Date(`${year}-${zeroPad(month, 2)}-01`).getDay() + 1
-}
-
-const getPreviousMonth = (month, year) => {
-  const prevMonth = month > 1 ? month - 1 : 12
-  const prevMonthYear = month > 1 ? year : year - 1
-
-  return { month: prevMonth, year: prevMonthYear }
-}
-
-const getNextMonth = (month, year) => {
-  const nextMonth = month < 12 ? month + 1 : 1
-  const nextMonthYear = month < 12 ? year : year + 1
-
-  return { month: nextMonth, year: nextMonthYear }
-}
-
-function monthText(monthNum) {
-  if (monthNum < 1 || monthNum > 12) return '???'
-  return CALENDAR_MONTHS[monthNum - 1]
-}
-
-const YearViewContent = styled.div`
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-`
+// ==================== Styled components ====================
 
 function DecadeView(props) {
   const { viewDate, setViewDate, selectedDate } = props
@@ -164,11 +137,6 @@ function YearView(props) {
   )
 }
 
-const MonthViewContent = styled.div`
-  display: grid;
-  grid-template-columns: auto auto auto auto auto auto auto;
-`
-
 function MonthView(props) {
   const { viewDate, setViewDate, selectedDate, onSelect } = props
   const {
@@ -218,68 +186,59 @@ function MonthView(props) {
 
   return (
     <>
-      <button onClick={goPrevMonth}>L</button>
-      <button onClick={goYearView}>
-        {monthText(viewDate.month)} {viewDate.year}
-      </button>
-      <button onClick={goNextMonth}>R</button>
-      <br />
+      <CalendarHeader>
+        <ArrowLeftButton onClick={goPrevMonth} />
+        <HeaderDateButton onClick={goYearView}>
+          {monthText(viewDate.month)} {viewDate.year}
+        </HeaderDateButton>
+        <ArrowRightButton onClick={goPrevMonth} />
+      </CalendarHeader>
 
       <MonthViewContent>
-        {/* days of prev month */}
         {WEEK_DAYS.map((dayText) => (
-          <strong key={dayText}>{dayText}</strong>
+          <WeekDayText key={dayText}>{dayText}</WeekDayText>
         ))}
+
+        {/* days of prev month */}
         {[...new Array(daysFromPrevMonth)].map((_, index) => {
           const day = index + 1 + (prevMonthDays - daysFromPrevMonth)
-          return (
-            <button disabled key={day}>
-              {day}
-            </button>
-          )
+          return <DateButtonDisabled key={day}>{day}</DateButtonDisabled>
         })}
+
         {/* days of current month */}
         {[...new Array(monthDays)].map((_, index) => {
           const day = index + 1
           const isToday =
             viewYear === THIS_YEAR &&
             viewMonth === THIS_MONTH &&
-            day === THIS_DAY
+            day === THIS_DATE
           const isSelected =
             viewYear === selectedYear &&
             viewMonth === selectedMonth &&
             day === selectedDay
+          const ButtonComponent = isSelected
+            ? DateButtonSelected
+            : isToday
+            ? DateButtonToday
+            : DateButtonNormal
           return (
-            <button
-              key={day}
-              onClick={() => selectDay(day)}
-              style={{
-                color: isSelected ? 'white' : isToday ? COLOR_RED : 'black',
-                backgroundColor: isSelected ? COLOR_RED : 'white',
-              }}
-            >
+            <ButtonComponent key={day} onClick={() => selectDay(day)}>
               {day}
-            </button>
+            </ButtonComponent>
           )
         })}
+
         {/* days of next month */}
         {[...new Array(daysFromNextMonth)].map((_, index) => {
           const day = index + 1
-          return (
-            <button disabled key={day}>
-              {day}
-            </button>
-          )
+          return <DateButtonDisabled key={day}>{day}</DateButtonDisabled>
         })}
       </MonthViewContent>
     </>
   )
 }
 
-const StyledCalendar = styled.div`
-  width: 400px;
-  border: 1px solid gray;
-`
+// ==================== Calendar itself ====================
 
 function Calendar(props) {
   const { date: selectedDate, onSelect } = props
