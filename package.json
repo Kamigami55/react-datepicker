@@ -9,7 +9,8 @@
     "start": "parcel src/index.html",
     "build": "rm -rf build && parcel build src/index.html --no-source-maps --out-dir build --public-url '.'",
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "new-component": "hygen component new"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
@@ -34,6 +35,7 @@
     "eslint-plugin-promise": "^4.3.1",
     "eslint-plugin-react": "^7.22.0",
     "gh-pages": "^3.1.0",
+    "hygen": "^6.0.4",
     "parcel-bundler": "1.12.3",
     "prettier": "^2.2.1",
     "stylelint": "^13.11.0",
