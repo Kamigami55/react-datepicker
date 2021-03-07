@@ -11,28 +11,19 @@ import {
 import {
   getMonthDays,
   getMonthFirstDay,
-  getNextMonth,
   getPreviousMonth,
   monthText,
 } from '../../../utils/dateUtils'
 import {
-  ArrowLeftButton,
-  ArrowRightButton,
-  CalendarHeader,
   DateButtonDisabled,
   DateButtonNormal,
   DateButtonSelected,
   DateButtonToday,
-  HeaderDateButton,
-  MonthViewContent,
   StyledCalendar,
   WeekDayText,
-  YearViewContent,
+  CalendarContent,
 } from './styles'
-
-// ==================== Constants ====================
-
-const COLOR_RED = '#db3d44'
+import CalendarHeader from '../../molecules/CalendarHeader'
 
 // ==================== Styled components ====================
 
@@ -55,32 +46,29 @@ function DecadeView(props) {
 
   return (
     <>
-      <button onClick={goPrevDecade}>L</button>
-      <button>{`${viewDecade}-${viewDecade + 9}`}</button>
-      <button onClick={goNextDecade}>R</button>
-      <br />
+      <CalendarHeader onPrevClick={goPrevDecade} onNextClick={goNextDecade}>
+        {`${viewDecade}-${viewDecade + 9}`}
+      </CalendarHeader>
 
-      <YearViewContent>
-        <button disabled>{viewDecade - 1}</button>
+      <CalendarContent gridCols={4}>
+        <DateButtonDisabled>{viewDecade - 1}</DateButtonDisabled>
         {[...new Array(10)].map((_, index) => {
           const year = viewDecade + index
           const isTodayYear = year === THIS_YEAR
           const isSelected = year === selectedYear
+          const ButtonComponent = isSelected
+            ? DateButtonSelected
+            : isTodayYear
+            ? DateButtonToday
+            : DateButtonNormal
           return (
-            <button
-              key={year}
-              onClick={() => selectYear(year)}
-              style={{
-                color: isSelected ? 'white' : isTodayYear ? COLOR_RED : 'black',
-                backgroundColor: isSelected ? COLOR_RED : 'white',
-              }}
-            >
+            <ButtonComponent key={year} onClick={() => selectYear(year)}>
               {year}
-            </button>
+            </ButtonComponent>
           )
         })}
-        <button disabled>{viewDecade + 10}</button>
-      </YearViewContent>
+        <DateButtonDisabled>{viewDecade + 10}</DateButtonDisabled>
+      </CalendarContent>
     </>
   )
 }
@@ -109,30 +97,35 @@ function YearView(props) {
 
   return (
     <>
-      <button onClick={goPrevYear}>L</button>
-      <button onClick={goDecadeView}>{viewYear}</button>
-      <button onClick={goNextYear}>R</button>
-      <br />
-      <YearViewContent>
+      <CalendarHeader
+        onPrevClick={goPrevYear}
+        onCenterClick={goDecadeView}
+        onNextClick={goNextYear}
+      >
+        {viewYear}
+      </CalendarHeader>
+
+      <CalendarContent gridCols={4}>
         {CALENDAR_MONTHS.map((monthText, index) => {
           const monthNum = index + 1
           const isThisMonth = viewYear === THIS_YEAR && monthNum === THIS_MONTH
           const isSelected =
             viewYear === selectedYear && monthNum === selectedMonth
+          const ButtonComponent = isSelected
+            ? DateButtonSelected
+            : isThisMonth
+            ? DateButtonToday
+            : DateButtonNormal
           return (
-            <button
+            <ButtonComponent
               key={monthNum}
               onClick={() => selectMonth(monthNum)}
-              style={{
-                color: isSelected ? 'white' : isThisMonth ? COLOR_RED : 'black',
-                backgroundColor: isSelected ? COLOR_RED : 'white',
-              }}
             >
               {monthText}
-            </button>
+            </ButtonComponent>
           )
         })}
-      </YearViewContent>
+      </CalendarContent>
     </>
   )
 }
@@ -177,24 +170,20 @@ function MonthView(props) {
     viewMonth,
     viewYear
   )
-  const { month: nextMonth, year: nextMonthYear } = getNextMonth(
-    viewMonth,
-    viewYear
-  )
 
   const prevMonthDays = getMonthDays(prevMonth, prevMonthYear)
 
   return (
     <>
-      <CalendarHeader>
-        <ArrowLeftButton onClick={goPrevMonth} />
-        <HeaderDateButton onClick={goYearView}>
-          {monthText(viewDate.month)} {viewDate.year}
-        </HeaderDateButton>
-        <ArrowRightButton onClick={goPrevMonth} />
+      <CalendarHeader
+        onPrevClick={goPrevMonth}
+        onCenterClick={goYearView}
+        onNextClick={goNextMonth}
+      >
+        {monthText(viewDate.month)} {viewDate.year}
       </CalendarHeader>
 
-      <MonthViewContent>
+      <CalendarContent gridCols={7}>
         {WEEK_DAYS.map((dayText) => (
           <WeekDayText key={dayText}>{dayText}</WeekDayText>
         ))}
@@ -233,7 +222,7 @@ function MonthView(props) {
           const day = index + 1
           return <DateButtonDisabled key={day}>{day}</DateButtonDisabled>
         })}
-      </MonthViewContent>
+      </CalendarContent>
     </>
   )
 }
@@ -242,13 +231,12 @@ function MonthView(props) {
 
 function Calendar(props) {
   const { date: selectedDate, onSelect } = props
-  // const { year, month, day } = selectedDate
   const [viewDate, setViewDate] = useState({
     decade: 2020,
     year: 2021,
     month: 3,
   })
-  const { decade: viewDecade, year: viewYear, month: viewMonth } = viewDate
+  const { year: viewYear, month: viewMonth } = viewDate
 
   const renderView = () => {
     if (viewMonth !== null)

@@ -1,73 +1,31 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
-  faChevronLeft,
-  faChevronRight,
-} from '@fortawesome/free-solid-svg-icons'
-
-const COLOR_RED = '#db3d44'
-const COLOR_RED_LIGHT = '#fd616b'
-const COLOR_GRAY = '#eeeeee'
-
-const ButtonBase = styled.button`
-  border: none;
-  background: none;
-  cursor: pointer;
-  padding: 8px 12px;
-  border-radius: 2px;
-  transition: all 100ms;
-  &:hover {
-    background-color: ${COLOR_GRAY};
-  }
-  &:active {
-    background-color: rgba(150, 150, 150, 0.5);
-  }
-`
-
-export const ArrowLeftButton = (props) => (
-  <ButtonBase {...props}>
-    <FontAwesomeIcon icon={faChevronLeft} />
-  </ButtonBase>
-)
-
-export const ArrowRightButton = (props) => (
-  <ButtonBase {...props}>
-    <FontAwesomeIcon icon={faChevronRight} />
-  </ButtonBase>
-)
+  COLOR_RED_LIGHT,
+  COLOR_GRAY,
+  COLOR_RED,
+} from '../../../constants/theme'
+import ButtonBase from '../../atoms/ButtonBase'
 
 export const StyledCalendar = styled.div`
   width: 360px;
   border: 2px solid rgba(150, 150, 150, 0.5);
 `
 
-export const HeaderDateButton = styled(ButtonBase)`
-  flex-grow: 1;
-`
-
-export const CalendarHeader = styled.div`
-  display: flex;
-  margin: 16px;
-`
-
 export const CalendarContent = styled.div`
   margin: 16px;
-`
-
-export const YearViewContent = styled(CalendarContent)`
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  //grid-template-columns: auto auto auto auto;
+  grid-template-columns: ${({ gridCols }) =>
+    `repeat(${gridCols}, minmax(0, 1fr))`};
   grid-gap: 4px;
 `
-
-export const MonthViewContent = styled(CalendarContent)`
-  display: grid;
-  //grid-template-columns: auto auto auto auto auto auto auto;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  grid-gap: 4px;
-`
+CalendarContent.propTypes = {
+  gridCols: PropTypes.number,
+}
+CalendarContent.defaultProps = {
+  gridCols: 4,
+}
 
 export const WeekDayText = styled.strong`
   text-align: center;
@@ -92,8 +50,8 @@ const RoundButtonInner = styled.span`
   justify-content: center;
 `
 
-const RoundButton = ({ children, ...otherProps }) => (
-  <RoundButtonOuter {...otherProps}>
+const RoundButton = ({ children, ...other }) => (
+  <RoundButtonOuter {...other}>
     <RoundButtonInner>{children}</RoundButtonInner>
   </RoundButtonOuter>
 )
