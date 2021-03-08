@@ -10,7 +10,7 @@ export const getMonthDays = (month, year) => {
 }
 
 export const getMonthFirstDay = (month, year) => {
-  return +new Date(`${year}-${zeroPad(month, 2)}-01`).getDay() + 1
+  return +new Date(toDateString({ year, month, day: 1 })).getDay() + 1
 }
 
 export const getPreviousMonth = (month, year) => {
@@ -30,4 +30,17 @@ export const getNextMonth = (month, year) => {
 export function monthText(monthNum) {
   if (monthNum < 1 || monthNum > 12) return '???'
   return CALENDAR_MONTHS[monthNum - 1]
+}
+
+export function toDateString({ year, month, day }) {
+  return `${year}-${zeroPad(month, 2)}-${zeroPad(day, 2)}`
+}
+
+export function toDateObject(dateISOString) {
+  const date = new Date(dateISOString)
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth() + 1,
+    day: date.getDate(),
+  }
 }

@@ -2,8 +2,8 @@ import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 export const StyledCalendar = styled.div`
-  width: 360px;
-  border: 2px solid rgba(150, 150, 150, 0.5);
+  width: 100%;
+  max-width: 360px;
 `
 
 export const CalendarContent = styled.div`

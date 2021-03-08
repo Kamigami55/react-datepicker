@@ -1,23 +1,22 @@
 import React from 'react'
 
-import {
-  THIS_DATE,
-  THIS_MONTH,
-  THIS_YEAR,
-} from '../../../constants/dateConstants'
+import { TODAY_OBJECT } from '../../../constants/dateConstants'
 import DemoPageTemplate from '../../templates/DemoPageTemplate'
+import { toDateString } from '../../../utils/dateUtils'
 
 function DemoPage() {
-  const [calendarDate, setCalendarDate] = React.useState({
-    year: THIS_YEAR,
-    month: THIS_MONTH,
-    day: THIS_DATE,
-  })
+  const [calendarDate, setCalendarDate] = React.useState(TODAY_OBJECT)
+
+  const [datePickerDate, setDatePickerDate] = React.useState(
+    toDateString(TODAY_OBJECT)
+  )
 
   return (
     <DemoPageTemplate
       calendarDate={calendarDate}
       setCalendarDate={setCalendarDate}
+      datePickerDate={datePickerDate}
+      setDatePickerDate={setDatePickerDate}
     />
   )
 }

@@ -3,6 +3,12 @@ export const THIS_YEAR = +new Date().getFullYear()
 export const THIS_MONTH = +new Date().getMonth() + 1 // 幾月 1~12
 export const THIS_DATE = +new Date().getDate() // 幾號 1~31
 
+export const TODAY_OBJECT = {
+  year: THIS_YEAR,
+  month: THIS_MONTH,
+  day: THIS_DATE,
+}
+
 // 月份英文 1~12 月
 export const CALENDAR_MONTHS = [
   'Jan',
