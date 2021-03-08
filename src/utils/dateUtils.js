@@ -1,6 +1,8 @@
 import { CALENDAR_MONTHS } from '../constants/dateConstants'
 
-const zeroPad = (value, length) => `${value}`.padStart(length, '0')
+function padStart(num) {
+  return +num < 10 ? '0' + num : num
+}
 
 export const getMonthDays = (month, year) => {
   const months30 = [4, 6, 9, 11]
@@ -33,7 +35,7 @@ export function monthText(monthNum) {
 }
 
 export function toDateString({ year, month, day }) {
-  return `${year}-${zeroPad(month, 2)}-${zeroPad(day, 2)}`
+  return `${year}-${padStart(month, 2)}-${padStart(day, 2)}`
 }
 
 export function toDateObject(dateISOString) {
