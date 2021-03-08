@@ -8,7 +8,7 @@ import {
   monthText,
 } from '../../../utils/dateUtils'
 import CalendarHeader from '../../molecules/CalendarHeader'
-import { CalendarContent } from '../Calendar/styles'
+import { CalendarContent7Col } from '../Calendar/styles'
 import WeekDayHeader from '../../molecules/WeekDayHeader'
 import {
   THIS_DATE,
@@ -75,7 +75,7 @@ function CalendarMonthView(props) {
         {monthText(viewDate.month)} {viewDate.year}
       </CalendarHeader>
 
-      <CalendarContent gridCols={7}>
+      <CalendarContent7Col>
         <WeekDayHeader />
 
         {/* days of prev month */}
@@ -112,7 +112,7 @@ function CalendarMonthView(props) {
           const day = index + 1
           return <DateButtonDisabled key={day}>{day}</DateButtonDisabled>
         })}
-      </CalendarContent>
+      </CalendarContent7Col>
     </>
   )
 }

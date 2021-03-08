@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import CalendarHeader from '../../molecules/CalendarHeader'
-import { CalendarContent } from '../Calendar/styles'
+import { CalendarContent4Col } from '../Calendar/styles'
 import {
   DateButtonNormal,
   DateButtonSelected,
@@ -46,7 +46,7 @@ function CalendarYearView(props) {
         {viewYear}
       </CalendarHeader>
 
-      <CalendarContent gridCols={4}>
+      <CalendarContent4Col>
         {CALENDAR_MONTHS.map((monthText, index) => {
           const monthNum = index + 1
           const isThisMonth = viewYear === THIS_YEAR && monthNum === THIS_MONTH
@@ -66,7 +66,7 @@ function CalendarYearView(props) {
             </ButtonComponent>
           )
         })}
-      </CalendarContent>
+      </CalendarContent4Col>
     </>
   )
 }

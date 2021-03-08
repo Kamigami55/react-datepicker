@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 
 export const StyledCalendar = styled.div`
@@ -6,16 +5,19 @@ export const StyledCalendar = styled.div`
   max-width: 360px;
 `
 
-export const CalendarContent = styled.div`
+const CalendarContent = styled.div`
   margin: 16px;
+  display: -ms-grid;
   display: grid;
-  grid-template-columns: ${({ gridCols }) =>
-    `repeat(${gridCols}, minmax(0, 1fr))`};
   grid-gap: 4px;
 `
-CalendarContent.propTypes = {
-  gridCols: PropTypes.number,
-}
-CalendarContent.defaultProps = {
-  gridCols: 4,
-}
+
+export const CalendarContent4Col = styled(CalendarContent)`
+  -ms-grid-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+`
+
+export const CalendarContent7Col = styled(CalendarContent)`
+  -ms-grid-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+`

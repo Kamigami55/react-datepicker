@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import CalendarHeader from '../../molecules/CalendarHeader'
-import { CalendarContent } from '../Calendar/styles'
+import { CalendarContent4Col } from '../Calendar/styles'
 import {
   DateButtonDisabled,
   DateButtonNormal,
@@ -34,7 +34,7 @@ function CalendarDecadeView(props) {
         {`${viewDecade}-${viewDecade + 9}`}
       </CalendarHeader>
 
-      <CalendarContent gridCols={4}>
+      <CalendarContent4Col>
         <DateButtonDisabled>{viewDecade - 1}</DateButtonDisabled>
         {[...new Array(10)].map((_, index) => {
           const year = viewDecade + index
@@ -52,7 +52,7 @@ function CalendarDecadeView(props) {
           )
         })}
         <DateButtonDisabled>{viewDecade + 10}</DateButtonDisabled>
-      </CalendarContent>
+      </CalendarContent4Col>
     </>
   )
 }
