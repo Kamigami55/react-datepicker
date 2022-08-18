@@ -6,7 +6,7 @@ My custom react datepicker component
 
 ![](preview.png)
 
-Live Demo: https://www.easonchang.com/react-datepicker/
+Live Demo: https://kamigami55.github.io/react-datepicker/
 
 Repo: https://github.com/Kamigami55/react-datepicker
 
